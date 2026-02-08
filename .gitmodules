@@ -4,3 +4,6 @@
 [submodule "LLMs-from-Scratch/Nano-GPT-OSS-580M"]
 	path = LLMs-from-Scratch/Nano-GPT-OSS-580M
 	url = https://github.com/ArpitKadam/Nano-GPT-OSS-580M
+[submodule "LLMs-from-Scratch/Gemma3-270M"]
+	path = LLMs-from-Scratch/Gemma3-270M
+	url = https://github.com/ArpitKadam/Gemma3-270M
