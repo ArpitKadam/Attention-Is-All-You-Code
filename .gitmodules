@@ -7,3 +7,6 @@
 [submodule "LLMs-from-Scratch/Gemma3-270M"]
 	path = LLMs-from-Scratch/Gemma3-270M
 	url = https://github.com/ArpitKadam/Gemma3-270M
+[submodule "LLMs-from-Scratch/Qwen3_Coder_30B_A3B_Instruct"]
+	path = LLMs-from-Scratch/Qwen3_Coder_30B_A3B_Instruct
+	url = https://github.com/ArpitKadam/Qwen3_Coder_30B_A3B_Instruct
