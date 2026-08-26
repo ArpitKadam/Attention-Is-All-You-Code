@@ -22,9 +22,10 @@
    - [Grouped-Query Attention](#grouped-query-attention)
    - [Interleaved Sliding-Window & Full Attention](#interleaved-sliding-window--full-attention)
 4. [Inference Pipeline](#inference-pipeline)
-5. [Repository Contents](#repository-contents)
-6. [Getting Started](#getting-started)
-7. [Key Takeaways](#key-takeaways)
+5. [Hardware & Environment](#hardware--environment)
+6. [Repository Contents](#repository-contents)
+7. [Getting Started](#getting-started)
+8. [Key Takeaways](#key-takeaways)
 
 ---
 
@@ -40,8 +41,6 @@ The workflow is deliberately transparent:
 4. **Generate** text with a minimal greedy, streaming decoder.
 
 This makes the model's internals — attention masking, positional encoding, normalization placement — fully inspectable, while still producing outputs identical to the reference implementation.
-
-> **Status:** This module is under active development and is part of the ongoing `LLMs-from-Scratch` series.
 
 ---
 
@@ -110,6 +109,26 @@ Each `TransformerBlock` selects a **local mask** or a **global mask** according 
 
 ---
 
+## Hardware & Environment
+
+This model was **not** run on local/consumer hardware. All development and inference were performed on a **rented cloud GPU from [RunPod.io](https://www.runpod.io/)** — an **NVIDIA A40** (or a comparable data-center accelerator).
+
+A 7-billion-parameter model in half precision occupies roughly **14–16 GB** for weights alone, before activations and the key-value cache. The recommended environment is therefore:
+
+| Requirement | Recommended |
+| :--- | :--- |
+| GPU | NVIDIA A40 (48 GB) — or A100 (40/80 GB), L40S, or ≥24 GB equivalent |
+| VRAM (bf16 inference) | ≥ 24 GB comfortably; ~16 GB minimum |
+| CUDA | 12.x |
+| PyTorch | 2.x with CUDA support |
+| System RAM | ≥ 32 GB |
+| Disk | ≥ 30 GB free (for the downloaded `safetensors` shards) |
+| Precision | `bfloat16` |
+
+> Run `Diagnostic.ipynb` first to confirm the GPU, driver, CUDA version, and available memory of the rented instance before loading weights.
+
+---
+
 ## Repository Contents
 
 ```text
@@ -128,7 +147,7 @@ Olmo-3-7B/
 pip install torch safetensors tokenizers huggingface_hub prompt_toolkit
 ```
 
-Loading a 7B-parameter model in half precision requires a GPU with sufficient memory (≈16 GB or more). Run `Diagnostic.ipynb` first to verify the available hardware.
+Loading a 7B-parameter model requires a data-center GPU — see [Hardware & Environment](#hardware--environment). Run `Diagnostic.ipynb` first to verify the rented instance.
 
 ### Running
 

@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=flat&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-Ecosystem-FFD21E?style=flat&logo=huggingface&logoColor=black)](https://huggingface.co/)
-[![Transformers](https://img.shields.io/badge/Architecture-Decoder--Only-purple?style=flat)]()
+[![Transformers](https://img.shields.io/badge/Architecture-Decoder--Only-purple?style=flat)](https://arxiv.org/abs/1706.03762)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub](https://img.shields.io/badge/GitHub-ArpitKadam-181717?style=flat&logo=github)](https://github.com/ArpitKadam/Attention-Is-All-You-Code)
 
@@ -17,8 +17,9 @@
 2. [The Model Progression](#the-model-progression)
 3. [Model Details](#model-details)
 4. [Architectural Themes](#architectural-themes)
-5. [Working With Submodules](#working-with-submodules)
-6. [Getting Started](#getting-started)
+5. [Hardware & Environment](#hardware--environment)
+6. [Working With Submodules](#working-with-submodules)
+7. [Getting Started](#getting-started)
 
 ---
 
@@ -45,18 +46,23 @@ The intent is pedagogical rigor: rather than calling a pre-built model, each pro
 ## Model Details
 
 ### GPT-2 (124M) — The Foundation
+
 A fourteen-chapter, ground-up construction of OpenAI's GPT-2 Small: tokenization, embeddings, the attention mechanism (from weightless intuition to efficient multi-head), the full transformer, the training loop, sampling strategies, and OpenAI-compatible weight loading. **The recommended starting point for the entire series.**
 
 ### Gemma3-270M — Full Pretraining Pipeline
+
 A 270M-parameter decoder-only model built and **trained from scratch**, following the architectural principles of Google's Gemma family. Includes an end-to-end pretraining workflow, a diagnostic/analysis suite, TensorBoard experiment tracking, and automated visualization of training dynamics.
 
 ### Nano-GPT-OSS-580M — Efficient Attention & Sparsity
+
 A 580M-parameter model exploring efficient computation: alternating **sliding-window and full-context attention**, **Mixture-of-Experts** feed-forward layers (top-1 routing), **RoPE with YaRN** scaling, **Grouped-Query Attention**, **SwiGLU**, and **RMSNorm**. Trained on TinyStories as a research platform for efficient architectures.
 
 ### OLMo-3 7B — Modern 7B Reconstruction
+
 A faithful, from-scratch reconstruction of AllenAI's fully open OLMo-3 7B, loaded with the official `safetensors` weights. Demonstrates interleaved sliding/full attention, YaRN-scaled RoPE, Grouped-Query Attention, and SwiGLU at 7-billion-parameter scale.
 
 ### Qwen3 Coder 30B A3B Instruct — Sparse MoE at Scale
+
 An instruction-tuned, code-specialized model built on a **sparse Mixture-of-Experts** design: 30B total parameters with only ~3B active per token. Optimized for multi-language code generation with support for efficient quantized inference.
 
 ---
@@ -72,6 +78,26 @@ Reading the series in order surfaces the trajectory of transformer design:
 | **Attention** | Dense multi-head | Grouped-Query + sliding-window/full interleaving |
 | **Feed-forward** | GELU MLP | SwiGLU, and sparse Mixture-of-Experts |
 | **Capacity scaling** | Dense (all params active) | Sparse activation (MoE) |
+
+---
+
+## Hardware & Environment
+
+None of these models were trained or run on local/consumer hardware. All development, training, and inference were carried out on **rented cloud GPUs from [RunPod.io](https://www.runpod.io/)** — primarily an **NVIDIA A40 (48 GB)** or a comparable data-center accelerator (A100, L40S).
+
+GPU memory requirements scale with parameter count. The following are practical guidelines for the reference `bfloat16` setup:
+
+| Model | Parameters | Indicative GPU VRAM |
+| :--- | :--- | :--- |
+| GPT-2 (124M) | 124M | ~8 GB (trains comfortably on an A40) |
+| Gemma3-270M | 270M | ~12 GB (pretraining) |
+| Nano-GPT-OSS-580M | 580M | ~16 GB (training) |
+| OLMo-3 7B | 7B | ~16 GB minimum, ≥24 GB comfortable (inference) |
+| Qwen3 Coder 30B A3B | 30B (3B active) | Large / multi-GPU; quantization recommended |
+
+**Reference environment:** NVIDIA A40 (48 GB) · CUDA 12.x · PyTorch 2.x · ≥32 GB system RAM · `bfloat16` precision.
+
+> A RunPod A40 instance comfortably handles the entire series up to OLMo-3 7B. Each model's `Diagnostic.ipynb` (where present) reports the live GPU, driver, and CUDA details of the rented instance.
 
 ---
 

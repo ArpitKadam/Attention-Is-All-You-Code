@@ -22,9 +22,10 @@
    - [Part IV — Training & Evaluation (CHP 10–12)](#part-iv--training--evaluation)
    - [Part V — Generation & Weights (CHP 13–14)](#part-v--generation--weights)
 4. [Model Configuration](#model-configuration)
-5. [Repository Contents](#repository-contents)
-6. [Getting Started](#getting-started)
-7. [Key Takeaways](#key-takeaways)
+5. [Hardware & Environment](#hardware--environment)
+6. [Repository Contents](#repository-contents)
+7. [Getting Started](#getting-started)
+8. [Key Takeaways](#key-takeaways)
 
 ---
 
@@ -109,6 +110,22 @@ The reference configuration matches GPT-2 Small:
 | Feed-forward expansion | 4× ($d_{model} \rightarrow 3072$) |
 | Dropout | 0.1 |
 | Parameter count | ~124 million |
+
+---
+
+## Hardware & Environment
+
+This module was developed and executed on a **rented cloud GPU from [RunPod.io](https://www.runpod.io/)** — an **NVIDIA A40 (48 GB)** or comparable data-center accelerator — rather than local hardware. At 124M parameters the model is modest by modern standards and does not require this much memory, but it was run on the same rented infrastructure used across the `LLMs-from-Scratch` series for consistency.
+
+| Requirement | Recommended |
+| :--- | :--- |
+| GPU | NVIDIA A40 (48 GB) — any CUDA GPU with ≥8 GB is sufficient for this model |
+| CUDA | 12.x |
+| PyTorch | 2.x with CUDA support |
+| System RAM | ≥ 16 GB |
+| Precision | FP32 / mixed precision |
+
+> The final chapter (CHP 14) additionally requires `tensorflow` to parse OpenAI's original checkpoints; this runs on CPU.
 
 ---
 

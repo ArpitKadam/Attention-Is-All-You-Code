@@ -114,6 +114,8 @@ A Hugging Face quick-reference cheatsheet and a notebook-metadata sanitizer wire
 python full_diagnostics.py
 ```
 
+> **Compute environment.** The from-scratch language models were not run on local hardware — they were developed on **rented cloud GPUs from [RunPod.io](https://www.runpod.io/)**, primarily an **NVIDIA A40 (48 GB)**. See [`LLMs-from-Scratch` → Hardware & Environment](./LLMs-from-Scratch/README.md#hardware--environment) for per-model requirements.
+
 ---
 
 ## Getting Started
